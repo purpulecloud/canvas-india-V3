@@ -1,0 +1,2388 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,initial-scale=1"
+    >
+
+    <title>Create & Customize | Canvas India</title>
+
+    <meta
+        name="description"
+        content="Create a personalized Canvas India wall piece from your photograph."
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        /* =========================================================
+           CANVAS INDIA — CREATE STUDIO
+           ========================================================= */
+
+        .create-page {
+            background: #f5f1e8;
+            color: #142a2f;
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           INTRO
+           ========================================================= */
+
+        .create-intro {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 72px 32px 46px;
+
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            gap: 40px;
+        }
+
+        .create-intro-left {
+            max-width: 720px;
+        }
+
+        .create-eyebrow {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: #c49a35;
+            margin-bottom: 18px;
+        }
+
+        .create-intro h1 {
+            margin: 0;
+
+            font-family: "Bodoni Moda", serif;
+            font-size: clamp(48px, 6vw, 78px);
+            line-height: .98;
+            font-weight: 500;
+            letter-spacing: -.045em;
+        }
+
+        .create-intro h1 em {
+            font-style: italic;
+        }
+
+        .create-intro-copy {
+            max-width: 430px;
+            margin: 0 0 5px;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 13px;
+            line-height: 1.75;
+            color: #6c7779;
+        }
+
+
+        /* =========================================================
+           STUDIO
+           ========================================================= */
+
+        .create-studio {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 32px 80px;
+        }
+
+        .studio-shell {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(400px, .92fr);
+
+            min-height: 660px;
+
+            border: 1px solid #d8d1c5;
+            background: #eee9df;
+        }
+
+
+        /* =========================================================
+           PREVIEW SIDE
+           ========================================================= */
+
+        .studio-preview-side {
+            padding: 28px;
+
+            display: flex;
+            flex-direction: column;
+
+            min-width: 0;
+
+            border-right: 1px solid #d8d1c5;
+        }
+
+        .preview-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .preview-label {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: #687578;
+        }
+
+        .preview-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #687578;
+        }
+
+        .preview-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #c49a35;
+        }
+
+
+        .artwork-stage {
+            position: relative;
+
+            flex: 1;
+
+            min-height: 490px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 42%,
+                    #ffffff 0%,
+                    #e9e4d9 65%,
+                    #ddd7cb 100%
+                );
+        }
+
+
+        /* subtle wall */
+        .artwork-stage::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(20,42,47,.025),
+                    transparent 25%,
+                    transparent 75%,
+                    rgba(20,42,47,.025)
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* actual artwork */
+        .artwork-frame {
+            position: relative;
+            z-index: 2;
+
+            width: min(72%, 470px);
+            aspect-ratio: 4 / 5;
+
+            background: #f8f5ed;
+
+            box-shadow:
+                0 30px 55px rgba(20,42,47,.15),
+                0 5px 12px rgba(20,42,47,.08);
+
+            overflow: hidden;
+
+            transition:
+                width .35s ease,
+                aspect-ratio .35s ease,
+                box-shadow .35s ease;
+        }
+
+        .artwork-frame.canvas {
+            border: 10px solid #e5dfd3;
+        }
+
+        .artwork-frame.acrylic {
+            border: 5px solid rgba(255,255,255,.8);
+
+            box-shadow:
+                0 30px 65px rgba(20,42,47,.2);
+        }
+
+        .artwork-frame.cork {
+            border: 12px solid #9d805b;
+        }
+
+        .artwork-frame.frame {
+            border: 14px solid #292e2d;
+        }
+
+
+        #preview-image {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .preview-empty {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #e8e2d6,
+                    #f5f1e8
+                );
+
+            color: #142a2f;
+        }
+
+        .preview-empty-mark {
+            font-family: "Bodoni Moda", serif;
+            font-size: 72px;
+            line-height: 1;
+            letter-spacing: -.07em;
+            margin-bottom: 13px;
+        }
+
+        .preview-empty-text {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: #727d7f;
+        }
+
+
+        .preview-caption {
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            z-index: 4;
+
+            padding: 35px 18px 17px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    rgba(0,0,0,.62)
+                );
+
+            color: white;
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 19px;
+            font-style: italic;
+
+            opacity: 0;
+            transform: translateY(8px);
+
+            transition:
+                opacity .25s ease,
+                transform .25s ease;
+        }
+
+        .preview-caption.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        .preview-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding-top: 18px;
+        }
+
+        .preview-dimensions {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: #687578;
+        }
+
+        .preview-note {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 9px;
+            color: #8a9293;
+        }
+
+
+        /* =========================================================
+           CONTROLS SIDE
+           ========================================================= */
+
+        .studio-controls {
+            background: #f8f5ed;
+
+            display: flex;
+            flex-direction: column;
+
+            min-width: 0;
+        }
+
+        .controls-inner {
+            padding: 28px 32px 30px;
+        }
+
+
+        /* =========================================================
+           STEP
+           ========================================================= */
+
+        .create-step {
+            padding: 0 0 25px;
+            margin-bottom: 25px;
+
+            border-bottom: 1px solid #ded8ce;
+        }
+
+        .create-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-heading {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 15px;
+
+            margin-bottom: 17px;
+        }
+
+        .step-number {
+            flex: 0 0 auto;
+
+            width: 26px;
+            height: 26px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid #c49a35;
+
+            border-radius: 50%;
+
+            font-family: "Bodoni Moda", serif;
+            font-size: 12px;
+
+            color: #142a2f;
+        }
+
+        .step-heading-copy h2 {
+            margin: 0 0 3px;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+
+            line-height: 1.25;
+        }
+
+        .step-heading-copy p {
+            margin: 0;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 10px;
+            line-height: 1.5;
+
+            color: #7b8586;
+        }
+
+
+        /* =========================================================
+           MATERIAL CARDS
+           ========================================================= */
+
+        .material-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 7px;
+        }
+
+        .material-card {
+            position: relative;
+
+            appearance: none;
+
+            border: 1px solid #d5cec2;
+
+            background: #f8f5ed;
+
+            padding: 13px 8px 11px;
+
+            cursor: pointer;
+
+            text-align: left;
+
+            transition:
+                border-color .2s ease,
+                background .2s ease,
+                transform .2s ease;
+        }
+
+        .material-card:hover {
+            transform: translateY(-2px);
+            border-color: #142a2f;
+        }
+
+        .material-card.active {
+            border-color: #142a2f;
+            background: #142a2f;
+            color: white;
+        }
+
+        .material-swatch {
+            width: 100%;
+            height: 30px;
+
+            margin-bottom: 10px;
+
+            border: 1px solid rgba(20,42,47,.08);
+        }
+
+        .swatch-canvas {
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    #eee9dc 0,
+                    #eee9dc 2px,
+                    #e5dfd2 2px,
+                    #e5dfd2 4px
+                );
+        }
+
+        .swatch-acrylic {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.95),
+                    #dce5e2
+                );
+        }
+
+        .swatch-cork {
+            background:
+                radial-gradient(
+                    circle at 30% 30%,
+                    #b99b72 0,
+                    #a98a62 38%,
+                    #8f704e 100%
+                );
+        }
+
+        .swatch-frame {
+            background:
+                linear-gradient(
+                    135deg,
+                    #373d3b,
+                    #181d1c
+                );
+        }
+
+        .material-name {
+            display: block;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .material-price {
+            display: block;
+
+            margin-top: 4px;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 8px;
+
+            opacity: .62;
+        }
+
+
+        /* =========================================================
+           UPLOAD
+           ========================================================= */
+
+        .upload-control {
+            display: grid;
+            grid-template-columns: 1fr auto;
+
+            align-items: center;
+
+            gap: 15px;
+
+            border: 1px dashed #aaa9a1;
+
+            padding: 14px 16px;
+
+            cursor: pointer;
+
+            transition:
+                border-color .2s ease,
+                background .2s ease;
+        }
+
+        .upload-control:hover {
+            border-color: #142a2f;
+            background: #f1ede4;
+        }
+
+        .upload-main {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .upload-icon {
+            width: 30px;
+            height: 30px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid #d0c9bd;
+
+            font-family: "Bodoni Moda", serif;
+            font-size: 17px;
+        }
+
+        .upload-copy strong {
+            display: block;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .upload-copy small {
+            display: block;
+
+            margin-top: 3px;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 8px;
+
+            color: #858e90;
+        }
+
+        .upload-action {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+
+            letter-spacing: .1em;
+            text-transform: uppercase;
+
+            color: #c49a35;
+        }
+
+
+        /* =========================================================
+           TEXT INPUT
+           ========================================================= */
+
+        .personalize-wrap {
+            position: relative;
+        }
+
+        .personalize-input {
+            width: 100%;
+
+            min-height: 48px;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d2cbc0;
+
+            background: #f8f5ed;
+
+            color: #142a2f;
+
+            outline: none;
+
+            resize: none;
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 17px;
+
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .personalize-input::placeholder {
+            color: #a2a5a2;
+            font-style: italic;
+        }
+
+        .personalize-input:focus {
+            border-color: #142a2f;
+
+            box-shadow:
+                0 0 0 3px rgba(20,42,47,.05);
+        }
+
+        .character-count {
+            position: absolute;
+
+            right: 12px;
+            bottom: 9px;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 7px;
+
+            color: #969d9d;
+        }
+
+
+        /* =========================================================
+           SIZE / FINISH
+           ========================================================= */
+
+        .option-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .option-group-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+
+            letter-spacing: .14em;
+            text-transform: uppercase;
+
+            color: #7b8586;
+        }
+
+        .mini-choice-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .mini-choice {
+            appearance: none;
+
+            border: 1px solid #d0c9bd;
+
+            background: transparent;
+
+            color: #142a2f;
+
+            padding: 9px 11px;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background .2s ease,
+                color .2s ease,
+                border-color .2s ease;
+        }
+
+        .mini-choice:hover {
+            border-color: #142a2f;
+        }
+
+        .mini-choice.active {
+            background: #142a2f;
+            border-color: #142a2f;
+            color: white;
+        }
+
+
+        /* =========================================================
+           PROOF NOTE
+           ========================================================= */
+
+        .proof-note {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 10px;
+
+            margin-top: 18px;
+
+            padding: 11px 12px;
+
+            background: #f0ece3;
+
+            border-left: 2px solid #c49a35;
+        }
+
+        .proof-check {
+            color: #142a2f;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .proof-note p {
+            margin: 0;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 8px;
+            line-height: 1.55;
+
+            color: #707a7c;
+        }
+
+        .proof-note strong {
+            color: #142a2f;
+        }
+
+
+        /* =========================================================
+           ORDER BAR
+           ========================================================= */
+
+        .create-order {
+            margin-top: auto;
+
+            border-top: 1px solid #d9d2c7;
+
+            padding: 20px 32px;
+
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+
+            align-items: center;
+
+            gap: 20px;
+
+            background: #f1ede4;
+        }
+
+        .order-label {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+
+            letter-spacing: .15em;
+            text-transform: uppercase;
+
+            color: #7b8586;
+        }
+
+        .order-summary {
+            margin-top: 5px;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 9px;
+
+            color: #142a2f;
+        }
+
+        .order-price {
+            font-family: "Bodoni Moda", serif;
+            font-size: 25px;
+            font-weight: 500;
+
+            white-space: nowrap;
+        }
+
+        .order-button {
+            appearance: none;
+
+            border: none;
+
+            background: #142a2f;
+            color: white;
+
+            padding: 14px 19px;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+
+            letter-spacing: .12em;
+            text-transform: uppercase;
+
+            cursor: pointer;
+
+            transition:
+                transform .2s ease,
+                background .2s ease;
+        }
+
+        .order-button:hover {
+            transform: translateY(-2px);
+            background: #203b40;
+        }
+
+        .order-button span {
+            margin-left: 9px;
+            font-size: 13px;
+        }
+
+
+        /* =========================================================
+           TOAST
+           ========================================================= */
+
+        .custom-toast {
+            position: fixed;
+
+            right: 24px;
+            bottom: 24px;
+
+            z-index: 9999;
+
+            padding: 14px 18px;
+
+            background: #142a2f;
+            color: white;
+
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 10px;
+
+            box-shadow: 0 15px 35px rgba(20,42,47,.18);
+
+            opacity: 0;
+            transform: translateY(12px);
+
+            pointer-events: none;
+
+            transition:
+                opacity .25s ease,
+                transform .25s ease;
+        }
+
+        .custom-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .studio-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .studio-preview-side {
+                border-right: none;
+                border-bottom: 1px solid #d8d1c5;
+            }
+
+            .artwork-stage {
+                min-height: 470px;
+            }
+
+            .create-order {
+                grid-template-columns: 1fr auto auto;
+            }
+        }
+
+
+        @media (max-width: 720px) {
+
+            .create-intro {
+                padding: 48px 20px 35px;
+
+                display: block;
+            }
+
+            .create-intro h1 {
+                font-size: clamp(46px, 14vw, 65px);
+            }
+
+            .create-intro-copy {
+                margin-top: 24px;
+            }
+
+            .create-studio {
+                padding: 0 15px 50px;
+            }
+
+            .studio-preview-side {
+                padding: 18px;
+            }
+
+            .artwork-stage {
+                min-height: 420px;
+            }
+
+            .artwork-frame {
+                width: 70%;
+            }
+
+            .controls-inner {
+                padding: 25px 20px;
+            }
+
+            .material-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .create-order {
+                grid-template-columns: 1fr auto;
+                padding: 18px 20px;
+            }
+
+            .order-button {
+                grid-column: 1 / -1;
+                width: 100%;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            .preview-top {
+                align-items: flex-start;
+            }
+
+            .preview-status {
+                display: none;
+            }
+
+            .artwork-stage {
+                min-height: 350px;
+            }
+
+            .artwork-frame {
+                width: 75%;
+            }
+
+            .option-row {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .create-step {
+                padding-bottom: 21px;
+                margin-bottom: 21px;
+            }
+
+            .step-heading {
+                margin-bottom: 14px;
+            }
+
+            .upload-control {
+                grid-template-columns: 1fr;
+            }
+
+            .upload-action {
+                padding-left: 42px;
+            }
+
+            .order-price {
+                font-size: 22px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP BAR
+     ========================================================= -->
+
+<div class="topbar">
+    Pan-India delivery · Preview before production · Made to order
+</div>
+
+
+<!-- =========================================================
+     NAVIGATION
+     ========================================================= -->
+
+<header class="nav">
+
+    <div class="container navin">
+
+        <a
+            class="logo"
+            href="index.html"
+        >
+            <img
+                src="assets/canvas-india-logo-transparent.png"
+                alt="Canvas India"
+            >
+        </a>
+
+
+        <nav class="links">
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a
+                href="restoration.html"
+                class="active"
+            >
+                Create
+            </a>
+
+            <a href="sell.html">
+                Corporate
+            </a>
+
+            <a href="about.html">
+                Our Story
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </nav>
+
+
+        <div class="actions">
+
+            <button
+                class="iconbtn"
+                data-open-cart
+            >
+                Bag
+                <span data-cart-count>0</span>
+            </button>
+
+
+            <button
+                class="iconbtn mobile"
+                id="mobile-toggle"
+            >
+                ☰
+            </button>
+
+
+            <a
+                class="cta"
+                href="shop.html"
+            >
+                Shop now
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MOBILE NAV -->
+
+    <div
+        id="mobile-links"
+        class="hide container"
+        style="
+            padding:15px 0;
+            border-top:1px solid var(--line);
+        "
+    >
+
+        <div
+            class="links"
+            style="
+                display:flex;
+                flex-direction:column;
+                align-items:flex-start;
+            "
+        >
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a href="restoration.html">
+                Create
+            </a>
+
+            <a href="sell.html">
+                Corporate
+            </a>
+
+            <a href="about.html">
+                Our Story
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<main class="create-page">
+
+
+    <!-- =====================================================
+         INTRO
+         ===================================================== -->
+
+    <section class="create-intro">
+
+        <div class="create-intro-left">
+
+            <div class="create-eyebrow">
+                Canvas India Studio
+            </div>
+
+            <h1>
+                Make it
+                <em>personal.</em>
+            </h1>
+
+        </div>
+
+
+        <p class="create-intro-copy">
+
+            Turn a photograph, memory or idea into a finished
+            piece for your wall. Choose the material, scale and
+            finish — we'll take care of the rest.
+
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         CUSTOMIZATION STUDIO
+         ===================================================== -->
+
+    <section class="create-studio">
+
+        <div class="studio-shell">
+
+
+            <!-- =================================================
+                 LEFT — LIVE PREVIEW
+                 ================================================= -->
+
+            <div class="studio-preview-side">
+
+                <div class="preview-top">
+
+                    <span class="preview-label">
+                        Live artwork preview
+                    </span>
+
+                    <span class="preview-status">
+                        <span class="preview-status-dot"></span>
+                        Studio preview
+                    </span>
+
+                </div>
+
+
+                <div class="artwork-stage">
+
+                    <div
+                        class="artwork-frame canvas"
+                        id="artwork-frame"
+                    >
+
+                        <div
+                            class="preview-empty"
+                            id="preview-empty"
+                        >
+
+                            <div class="preview-empty-mark">
+                                CI
+                            </div>
+
+                            <div class="preview-empty-text">
+                                Your photograph
+                            </div>
+
+                        </div>
+
+
+                        <img
+                            id="preview-image"
+                            alt="Your personalized artwork preview"
+                            hidden
+                        >
+
+
+                        <div
+                            class="preview-caption"
+                            id="preview-caption"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="preview-bottom">
+
+                    <span
+                        class="preview-dimensions"
+                        id="preview-dimensions"
+                    >
+                        12 × 18 in
+                    </span>
+
+                    <span class="preview-note">
+                        Approximate studio preview
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RIGHT — CONTROLS
+                 ================================================= -->
+
+            <div class="studio-controls">
+
+                <div class="controls-inner">
+
+
+                    <!-- =================================================
+                         STEP 01 — MATERIAL
+                         ================================================= -->
+
+                    <div class="create-step">
+
+                        <div class="step-heading">
+
+                            <span class="step-number">
+                                01
+                            </span>
+
+                            <div class="step-heading-copy">
+
+                                <h2>
+                                    Choose your surface
+                                </h2>
+
+                                <p>
+                                    Select the finish that suits your space.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="material-grid"
+                            data-group="format"
+                        >
+
+                            <button
+                                type="button"
+                                class="material-card active"
+                                data-value="Canvas"
+                            >
+
+                                <span class="material-swatch swatch-canvas"></span>
+
+                                <span class="material-name">
+                                    Canvas
+                                </span>
+
+                                <span class="material-price">
+                                    From ₹1,499
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="material-card"
+                                data-value="Acrylic"
+                            >
+
+                                <span class="material-swatch swatch-acrylic"></span>
+
+                                <span class="material-name">
+                                    Acrylic
+                                </span>
+
+                                <span class="material-price">
+                                    From ₹1,999
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="material-card"
+                                data-value="Cork"
+                            >
+
+                                <span class="material-swatch swatch-cork"></span>
+
+                                <span class="material-name">
+                                    Cork
+                                </span>
+
+                                <span class="material-price">
+                                    From ₹1,699
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="material-card"
+                                data-value="Frame"
+                            >
+
+                                <span class="material-swatch swatch-frame"></span>
+
+                                <span class="material-name">
+                                    Frame
+                                </span>
+
+                                <span class="material-price">
+                                    From ₹1,799
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         STEP 02 — IMAGE
+                         ================================================= -->
+
+                    <div class="create-step">
+
+                        <div class="step-heading">
+
+                            <span class="step-number">
+                                02
+                            </span>
+
+                            <div class="step-heading-copy">
+
+                                <h2>
+                                    Add your photograph
+                                </h2>
+
+                                <p>
+                                    Use a high-resolution JPG, PNG or WEBP.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <label
+                            class="upload-control"
+                            for="custom-image"
+                        >
+
+                            <div class="upload-main">
+
+                                <span class="upload-icon">
+                                    +
+                                </span>
+
+                                <span class="upload-copy">
+
+                                    <strong id="upload-title">
+                                        Upload your image
+                                    </strong>
+
+                                    <small id="upload-file-name">
+                                        JPG, PNG or WEBP · up to 20 MB
+                                    </small>
+
+                                </span>
+
+                            </div>
+
+
+                            <span class="upload-action">
+                                Browse
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            id="custom-image"
+                            type="file"
+                            accept="image/png,image/jpeg,image/webp"
+                            hidden
+                        >
+
+                    </div>
+
+
+                    <!-- =================================================
+                         STEP 03 — PERSONALIZE
+                         ================================================= -->
+
+                    <div class="create-step">
+
+                        <div class="step-heading">
+
+                            <span class="step-number">
+                                03
+                            </span>
+
+                            <div class="step-heading-copy">
+
+                                <h2>
+                                    Make it yours
+                                </h2>
+
+                                <p>
+                                    Add a name, date, place or short message.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="personalize-wrap">
+
+                            <textarea
+                                class="personalize-input"
+                                id="personalize-text"
+                                maxlength="42"
+                                rows="1"
+                                placeholder="e.g. Jaipur · Summer 2026"
+                            ></textarea>
+
+                            <span
+                                class="character-count"
+                                id="character-count"
+                            >
+                                0 / 42
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         STEP 04 — SIZE & FINISH
+                         ================================================= -->
+
+                    <div class="create-step">
+
+                        <div class="step-heading">
+
+                            <span class="step-number">
+                                04
+                            </span>
+
+                            <div class="step-heading-copy">
+
+                                <h2>
+                                    Set the details
+                                </h2>
+
+                                <p>
+                                    Choose your size and final finish.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="option-row">
+
+
+                            <!-- SIZE -->
+
+                            <div>
+
+                                <span class="option-group-label">
+                                    Size
+                                </span>
+
+                                <div
+                                    class="mini-choice-row"
+                                    data-group="size"
+                                >
+
+                                    <button
+                                        type="button"
+                                        class="mini-choice active"
+                                        data-value="12 × 18"
+                                    >
+                                        12 × 18
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="mini-choice"
+                                        data-value="16 × 24"
+                                    >
+                                        16 × 24
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="mini-choice"
+                                        data-value="24 × 36"
+                                    >
+                                        24 × 36
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- FINISH -->
+
+                            <div>
+
+                                <span class="option-group-label">
+                                    Finish
+                                </span>
+
+                                <div
+                                    class="mini-choice-row"
+                                    data-group="finish"
+                                >
+
+                                    <button
+                                        type="button"
+                                        class="mini-choice active"
+                                        data-value="Matte"
+                                    >
+                                        Matte
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="mini-choice"
+                                        data-value="Gloss"
+                                    >
+                                        Gloss
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="mini-choice"
+                                        data-value="Premium"
+                                    >
+                                        Premium
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="proof-note">
+
+                            <span class="proof-check">
+                                ✓
+                            </span>
+
+                            <p>
+                                <strong>Production proof included.</strong>
+                                We'll confirm the final crop and composition
+                                with you before production.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     ORDER BAR
+                     ================================================= -->
+
+                <div class="create-order">
+
+                    <div>
+
+                        <div class="order-label">
+                            Your piece
+                        </div>
+
+                        <div
+                            class="order-summary"
+                            id="custom-summary"
+                        >
+                            Canvas · 12 × 18 · Matte
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="order-price"
+                        id="custom-price"
+                    >
+                        ₹1,499
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="order-button"
+                        id="custom-order"
+                    >
+
+                        Add to custom order
+
+                        <span>
+                            →
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="footergrid">
+
+
+            <!-- BRAND -->
+
+            <div>
+
+                <img
+                    src="assets/canvas-india-logo-transparent.png"
+                    alt="Canvas India"
+                    style="
+                        height:48px;
+                        filter:brightness(0) invert(1);
+                        margin-bottom:12px;
+                    "
+                >
+
+                <p
+                    style="
+                        color:#c4cdc7;
+                        max-width:330px;
+                        line-height:1.8;
+                        font-size:13px;
+                    "
+                >
+
+                    Turn your photographs, ideas and stories
+                    into beautifully finished pieces for Indian
+                    homes, gifts and businesses.
+
+                </p>
+
+            </div>
+
+
+            <!-- EXPLORE -->
+
+            <div>
+
+                <h4>
+                    Explore
+                </h4>
+
+                <a href="shop.html">
+                    Shop all
+                </a>
+
+                <a href="restoration.html">
+                    Create a custom print
+                </a>
+
+                <a href="sell.html">
+                    Corporate orders
+                </a>
+
+                <a href="about.html">
+                    Our story
+                </a>
+
+            </div>
+
+
+            <!-- HELP -->
+
+            <div>
+
+                <h4>
+                    Help
+                </h4>
+
+                <a href="contact.html">
+                    Contact support
+                </a>
+
+                <a href="privacy.html">
+                    Privacy
+                </a>
+
+                <a href="terms.html">
+                    Terms
+                </a>
+
+                <a href="contact.html">
+                    Shipping &amp; delivery
+                </a>
+
+            </div>
+
+
+            <!-- INDIA -->
+
+            <div>
+
+                <h4>
+                    Made for India
+                </h4>
+
+                <p
+                    style="
+                        color:#c4cdc7;
+                        font-size:12px;
+                        line-height:1.8;
+                    "
+                >
+
+                    Secure ordering
+                    <br>
+
+                    Careful packaging
+                    <br>
+
+                    Pan-India delivery
+                    <br>
+
+                    Production proofing
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footerbottom">
+
+            <span>
+                © 2026 Canvas India
+            </span>
+
+            <span>
+                Personalized print · wall art · gifting · business
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     CART
+     ========================================================= -->
+
+<div
+    id="overlay"
+    class="overlay"
+></div>
+
+
+<aside
+    id="cart-drawer"
+    class="cart-drawer"
+>
+
+    <div
+        style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        "
+    >
+
+        <h2
+            class="serif"
+            style="
+                font-size:32px;
+                margin:0;
+            "
+        >
+            Your Bag
+        </h2>
+
+        <button
+            class="iconbtn"
+            onclick="closeCart()"
+        >
+            Close
+        </button>
+
+    </div>
+
+
+    <div
+        id="cart-items"
+        style="
+            margin-top:25px;
+        "
+    ></div>
+
+
+    <a
+        class="cta"
+        href="contact.html"
+        style="
+            margin-top:25px;
+        "
+    >
+        Proceed / enquire
+    </a>
+
+</aside>
+
+
+<!-- =========================================================
+     ORIGINAL SITE JAVASCRIPT
+     ========================================================= -->
+
+<script src="scripts.js"></script>
+
+
+<!-- =========================================================
+     CREATE STUDIO JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    /* =========================================================
+       STATE
+       ========================================================= */
+
+    const state = {
+
+        format: "Canvas",
+
+        size: "12 × 18",
+
+        finish: "Matte",
+
+        text: ""
+
+    };
+
+
+    /* =========================================================
+       PRICING
+       ========================================================= */
+
+    const prices = {
+
+        Canvas: {
+            "12 × 18": 1499,
+            "16 × 24": 1899,
+            "24 × 36": 2699
+        },
+
+        Acrylic: {
+            "12 × 18": 1999,
+            "16 × 24": 2499,
+            "24 × 36": 3499
+        },
+
+        Cork: {
+            "12 × 18": 1699,
+            "16 × 24": 2199,
+            "24 × 36": 2999
+        },
+
+        Frame: {
+            "12 × 18": 1799,
+            "16 × 24": 2299,
+            "24 × 36": 3199
+        }
+
+    };
+
+
+    const finishExtras = {
+
+        Matte: 0,
+
+        Gloss: 150,
+
+        Premium: 300
+
+    };
+
+
+    /* =========================================================
+       ELEMENTS
+       ========================================================= */
+
+    const summary =
+        document.getElementById("custom-summary");
+
+    const price =
+        document.getElementById("custom-price");
+
+    const imageInput =
+        document.getElementById("custom-image");
+
+    const previewImage =
+        document.getElementById("preview-image");
+
+    const previewEmpty =
+        document.getElementById("preview-empty");
+
+    const artworkFrame =
+        document.getElementById("artwork-frame");
+
+    const previewCaption =
+        document.getElementById("preview-caption");
+
+    const previewDimensions =
+        document.getElementById("preview-dimensions");
+
+    const personalizeText =
+        document.getElementById("personalize-text");
+
+    const characterCount =
+        document.getElementById("character-count");
+
+    const uploadTitle =
+        document.getElementById("upload-title");
+
+    const uploadFileName =
+        document.getElementById("upload-file-name");
+
+    const toast =
+        document.getElementById("custom-toast");
+
+
+    /* =========================================================
+       PRICE
+       ========================================================= */
+
+    function getPrice() {
+
+        return (
+            prices[state.format][state.size] +
+            finishExtras[state.finish]
+        );
+
+    }
+
+
+    /* =========================================================
+       UPDATE UI
+       ========================================================= */
+
+    function updateStudio() {
+
+        const finalPrice = getPrice();
+
+
+        summary.textContent =
+            state.format +
+            " · " +
+            state.size +
+            " · " +
+            state.finish;
+
+
+        price.textContent =
+            "₹" +
+            finalPrice.toLocaleString("en-IN");
+
+
+        previewDimensions.textContent =
+            state.size +
+            " in";
+
+
+        artworkFrame.classList.remove(
+            "canvas",
+            "acrylic",
+            "cork",
+            "frame"
+        );
+
+
+        artworkFrame.classList.add(
+            state.format.toLowerCase()
+        );
+
+
+        if (state.text.trim()) {
+
+            previewCaption.textContent =
+                state.text.trim();
+
+            previewCaption.classList.add(
+                "visible"
+            );
+
+        } else {
+
+            previewCaption.textContent = "";
+
+            previewCaption.classList.remove(
+                "visible"
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CHOICE BUTTONS
+       ========================================================= */
+
+    document
+        .querySelectorAll(
+            '[data-group] .material-card, [data-group] .mini-choice'
+        )
+        .forEach(function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const group =
+                        this.closest(
+                            "[data-group]"
+                        ).dataset.group;
+
+
+                    this
+                        .closest("[data-group]")
+                        .querySelectorAll(
+                            ".material-card, .mini-choice"
+                        )
+                        .forEach(function (item) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        });
+
+
+                    this.classList.add(
+                        "active"
+                    );
+
+
+                    state[group] =
+                        this.dataset.value;
+
+
+                    updateStudio();
+
+                }
+            );
+
+        });
+
+
+    /* =========================================================
+       IMAGE UPLOAD
+       ========================================================= */
+
+    imageInput.addEventListener(
+        "change",
+        function (event) {
+
+            const file =
+                event.target.files &&
+                event.target.files[0];
+
+
+            if (!file) {
+                return;
+            }
+
+
+            if (
+                !file.type.startsWith("image/")
+            ) {
+
+                showToast(
+                    "Please choose an image file."
+                );
+
+                return;
+
+            }
+
+
+            const url =
+                URL.createObjectURL(file);
+
+
+            previewImage.src = url;
+
+            previewImage.hidden = false;
+
+            previewEmpty.style.display =
+                "none";
+
+
+            uploadTitle.textContent =
+                "Image selected";
+
+            uploadFileName.textContent =
+                file.name;
+
+
+            showToast(
+                "Image uploaded · preview updated"
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       PERSONALIZATION
+       ========================================================= */
+
+    personalizeText.addEventListener(
+        "input",
+        function () {
+
+            state.text =
+                this.value;
+
+
+            characterCount.textContent =
+                this.value.length +
+                " / 42";
+
+
+            updateStudio();
+
+        }
+    );
+
+
+    /* =========================================================
+       ADD TO CUSTOM ORDER
+       ========================================================= */
+
+    document
+        .getElementById("custom-order")
+        .addEventListener(
+            "click",
+            function () {
+
+                const imageAdded =
+                    !previewImage.hidden;
+
+
+                if (!imageAdded) {
+
+                    showToast(
+                        "Add a photograph before placing your custom order."
+                    );
+
+                    imageInput.focus();
+
+                    return;
+
+                }
+
+
+                showToast(
+                    "Custom piece added · " +
+                    state.format +
+                    " · " +
+                    state.size
+                );
+
+            }
+        );
+
+
+    /* =========================================================
+       TOAST
+       ========================================================= */
+
+    function showToast(message) {
+
+        if (!toast) {
+            return;
+        }
+
+
+        toast.textContent =
+            message;
+
+
+        toast.classList.add(
+            "show"
+        );
+
+
+        clearTimeout(
+            window.canvasIndiaToast
+        );
+
+
+        window.canvasIndiaToast =
+            setTimeout(
+                function () {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                2600
+            );
+
+    }
+
+
+    /* =========================================================
+       INITIAL RENDER
+       ========================================================= */
+
+    updateStudio();
+
+
+})();
+
+</script>
+
+
+<!-- TOAST -->
+
+<div
+    class="custom-toast"
+    id="custom-toast"
+></div>
+
+
+</body>
+
+</html>
